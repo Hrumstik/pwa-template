@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import MainView from "./components/MainView";
@@ -6,6 +7,8 @@ import PwaView from "./components/PwaView";
 import ReviewsView from "./components/ReviewsView";
 import axios from "axios";
 import { PwaContent } from "./shared/models";
+
+declare const window: any;
 
 export interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -16,12 +19,11 @@ export default function App() {
   const [view, setView] = useState("main");
   const [isPWAActive, setIsPWAActive] = useState(false);
   const [pwaContent, setPwaContent] = useState<PwaContent | null>(null);
-  // console.log(import.meta.env.VITE_PWA_CONTENT_ID);
 
   useEffect(() => {
     const getPwaContent = async () => {
       const response = await axios.get(
-        "api/pwa-content/6725f5d3ec1a50fffa7d2a8b/trusted"
+        `api/pwa-content/${import.meta.env.VITE_PWA_CONTENT_ID}/trusted`
       );
       setPwaContent(response.data);
     };
@@ -46,6 +48,24 @@ export default function App() {
 
       window.location.href = intentUrl;
     }
+  }, []);
+
+  useEffect(() => {
+    console.log("useEffect");
+    const handleBeforeInstallPrompt = (e: Event) => {
+      console.log("beforeinstallprompt");
+      const event = e as BeforeInstallPromptEvent;
+      console.log(event);
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
+    };
   }, []);
 
   useEffect(() => {
