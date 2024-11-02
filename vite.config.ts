@@ -43,4 +43,15 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    cors: true,
+    proxy: {
+      "/api": {
+        target: "https://pwac.world",
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
 });

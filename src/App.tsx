@@ -4,7 +4,8 @@ import MainView from "./components/MainView";
 import AboutView from "./components/AboutView";
 import PwaView from "./components/PwaView";
 import ReviewsView from "./components/ReviewsView";
-import useSanity from "./shared/hooks/useSanity";
+import axios from "axios";
+import { PwaContent } from "./shared/models";
 
 export interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -12,10 +13,20 @@ export interface BeforeInstallPromptEvent extends Event {
 }
 
 export default function App() {
-  const { data } = useSanity("pwaLink");
   const [view, setView] = useState("main");
   const [isPWAActive, setIsPWAActive] = useState(false);
-  console.log(import.meta.env.VITE_PWA_CONTENT_ID);
+  const [pwaContent, setPwaContent] = useState<PwaContent | null>(null);
+  // console.log(import.meta.env.VITE_PWA_CONTENT_ID);
+
+  useEffect(() => {
+    const getPwaContent = async () => {
+      const response = await axios.get(
+        "api/pwa-content/6725f5d3ec1a50fffa7d2a8b/trusted"
+      );
+      setPwaContent(response.data);
+    };
+    getPwaContent();
+  }, []);
 
   useEffect(() => {
     const isPWAActivated = window.matchMedia(
@@ -38,11 +49,11 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (data?.pwaLink) {
+    if (pwaContent?.pwaLink) {
       setTimeout(() => {
         const searchParams = new URLSearchParams(window.location.search);
 
-        let newPwaLink = data.pwaLink;
+        let newPwaLink = pwaContent.pwaLink;
         let pixelId: string | null = "";
 
         const fbc = Cookies.get("_fbc");
@@ -83,21 +94,27 @@ export default function App() {
         }
       }, 3000);
     }
-  }, [data]);
+  }, [pwaContent]);
+
+  if (!pwaContent) return <></>;
 
   let currentView;
 
   switch (view) {
     case "main":
-      currentView = <MainView setView={setView} />;
+      currentView = <MainView pwaContent={pwaContent} setView={setView} />;
       break;
     case "about":
-      currentView = <AboutView setView={setView} />;
+      currentView = <AboutView setView={setView} pwaContent={pwaContent} />;
       break;
     case "reviews":
-      currentView = <ReviewsView setView={setView} />;
+      currentView = <ReviewsView pwaContent={pwaContent} setView={setView} />;
       break;
   }
 
-  return isPWAActive ? <PwaView /> : <>{currentView}</>;
+  return isPWAActive ? (
+    <PwaView pwaLink={pwaContent.pwaLink} />
+  ) : (
+    <>{currentView}</>
+  );
 }
