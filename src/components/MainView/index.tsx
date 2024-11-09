@@ -203,81 +203,93 @@ const MainView: React.FC<Props> = ({ setView, pwaContent }) => {
             defaultMessage: "All reviews",
           })}
         </button>
-        <div className="flex justify-between items-center cursor-pointer mb-3">
-          <span className="text-[#605D64] leading-6 font-medium text-base">
-            {intl.formatMessage({
-              id: "dataSecurity",
-              defaultMessage: "Data security",
-            })}
-          </span>
-        </div>
-        <div className="text-[#605D64] text-[13px] leading-4 mb-[14px]">
-          {intl.formatMessage({
-            id: "safetyContent",
-          })}
-        </div>
-        <div className="rounded-lg border border-solid border-[#E6E0E9] pt-5 pl-5 pr-3 pb-5">
-          <div className="flex flex-col gap-4 mb-[23px]">
-            <div className="flex gap-4">
-              <img
-                className="w-5 h-5"
-                src={thirdPartyIcon}
-                alt="third party icon"
-              />
-              <div className="text-[#605D64] text-[13px] leading-4">
+        {pwaContent.securityUI && (
+          <>
+            <div className="flex justify-between items-center cursor-pointer mb-3">
+              <span className="text-[#605D64] leading-6 font-medium text-base">
                 {intl.formatMessage({
-                  id: "thirdParty",
+                  id: "dataSecurity",
+                  defaultMessage: "Data security",
                 })}
-                <span className="text-[11px]">
-                  {" "}
-                  {intl.formatMessage({
-                    id: "locationDisclosure",
-                  })}
-                </span>
-              </div>
+              </span>
             </div>
-            <div className="flex gap-4">
-              <img
-                className="w-5 h-5"
-                src={dataCollecting}
-                alt="third party icon"
-              />
-              <div className="text-[#605D64] text-[13px] leading-4">
-                <div>
-                  {intl.formatMessage({
-                    id: "noDataCollected",
-                  })}
-                </div>
-                <div className="text-[11px]">
-                  {intl.formatMessage({
-                    id: "learnMore",
-                  })}{" "}
-                  <span className="underline cursor-pointer">
+            <div className="text-[#605D64] text-[13px] leading-4 mb-[14px]">
+              {intl.formatMessage({
+                id: "safetyContent",
+              })}
+            </div>
+            <div className="rounded-lg border border-solid border-[#E6E0E9] pt-5 pl-5 pr-3 pb-5">
+              <div className="flex flex-col gap-4 mb-[23px]">
+                <div className="flex gap-4">
+                  <img
+                    className="w-5 h-5"
+                    src={thirdPartyIcon}
+                    alt="third party icon"
+                  />
+                  <div className="text-[#605D64] text-[13px] leading-4">
                     {intl.formatMessage({
-                      id: "developerDataCollection",
+                      id: "thirdParty",
                     })}
-                  </span>
+                    <span className="text-[11px]">
+                      {" "}
+                      {intl.formatMessage({
+                        id: "locationDisclosure",
+                      })}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <img
+                    className="w-5 h-5"
+                    src={dataCollecting}
+                    alt="third party icon"
+                  />
+                  <div className="text-[#605D64] text-[13px] leading-4">
+                    <div>
+                      {intl.formatMessage({
+                        id: "noDataCollected",
+                      })}
+                    </div>
+                    <div className="text-[11px]">
+                      {intl.formatMessage({
+                        id: "learnMore",
+                      })}{" "}
+                      <span className="underline cursor-pointer">
+                        {intl.formatMessage({
+                          id: "developerDataCollection",
+                        })}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <img
+                    className="w-5 h-5"
+                    src={stopIcon}
+                    alt="third party icon"
+                  />
+                  <div className="text-[#605D64] text-[13px] leading-4">
+                    {intl.formatMessage({
+                      id: "dataNotEncrypted",
+                    })}
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <img
+                    className="w-5 h-5"
+                    src={stopIcon}
+                    alt="third party icon"
+                  />
+                  <div className="text-[#605D64] text-[13px] leading-4">
+                    {intl.formatMessage({
+                      id: "dataCanNotBeDeleted",
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="flex gap-4">
-              <img className="w-5 h-5" src={stopIcon} alt="third party icon" />
-              <div className="text-[#605D64] text-[13px] leading-4">
-                {intl.formatMessage({
-                  id: "dataNotEncrypted",
-                })}
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <img className="w-5 h-5" src={stopIcon} alt="third party icon" />
-              <div className="text-[#605D64] text-[13px] leading-4">
-                {intl.formatMessage({
-                  id: "dataCanNotBeDeleted",
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </motion.div>
   );
