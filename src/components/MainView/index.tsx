@@ -11,10 +11,10 @@ import InstallationProgress from "../InstallationProgress";
 import { PwaContent } from "../../shared/models";
 import ArrowLeft from "../../shared/icons/ArrowLeft";
 import StarIcon from "../../shared/icons/StarIcon";
-import ArrowRight from "../../shared/icons/ArrowRight";
 import thirdPartyIcon from "../../shared/images/thirdParties.png";
 import dataCollecting from "../../shared/images/dataCollecting.png";
 import stopIcon from "../../shared/images/stop.png";
+import { motion } from "framer-motion";
 
 interface Props {
   setView: Dispatch<SetStateAction<string>>;
@@ -24,13 +24,24 @@ interface Props {
 const MainView: React.FC<Props> = ({ setView, pwaContent }) => {
   const intl = useIntl();
 
+  const slideVariants = {
+    visible: { x: 0, opacity: 1 },
+    exit: { x: "-100%", opacity: 0 },
+  };
+
   const reviews =
     pwaContent.reviews.length > 3
       ? pwaContent.reviews.slice(0, 3)
       : pwaContent.reviews;
 
   return (
-    <>
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+      variants={slideVariants}
+      transition={{ duration: 0.25, ease: "easeInOut" }}
+    >
       <div className="h-11 pl-[18px] flex items-center mb-2.5">
         <ArrowLeft />
       </div>
@@ -199,7 +210,6 @@ const MainView: React.FC<Props> = ({ setView, pwaContent }) => {
               defaultMessage: "Data security",
             })}
           </span>
-          <ArrowRight />
         </div>
         <div className="text-[#605D64] text-[13px] leading-4 mb-[14px]">
           {intl.formatMessage({
@@ -269,7 +279,7 @@ const MainView: React.FC<Props> = ({ setView, pwaContent }) => {
           </div>
         </div>
       </div>
-    </>
+    </motion.div>
   );
 };
 

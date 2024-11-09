@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 import ViewHeader from "../ViewHeader";
 import { PwaContent } from "../../shared/models";
 import moment from "moment";
+import { motion } from "framer-motion";
 
 interface Props {
   setView: Dispatch<SetStateAction<string>>;
@@ -12,8 +13,20 @@ interface Props {
 const AboutView: React.FC<Props> = ({ setView, pwaContent }) => {
   const intl = useIntl();
 
+  const slideVariants = {
+    hidden: { x: "-100%", opacity: 0 },
+    visible: { x: 0, opacity: 1 },
+    exit: { x: "-100%", opacity: 0 },
+  };
+
   return (
-    <div className="transition ease-in-out duration-200">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+      variants={slideVariants}
+      transition={{ duration: 0.25, ease: "easeInOut" }}
+    >
       <ViewHeader
         appIcon={pwaContent.appIcon}
         developerName={pwaContent.developerName}
@@ -85,7 +98,7 @@ const AboutView: React.FC<Props> = ({ setView, pwaContent }) => {
         </div>
       </div>
       <div className="bg-[#C6C6C6] h-[1px] w-full" />
-    </div>
+    </motion.div>
   );
 };
 
