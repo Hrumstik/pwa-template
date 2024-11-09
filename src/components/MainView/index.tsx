@@ -185,7 +185,7 @@ const MainView: React.FC<Props> = ({ setView, pwaContent }) => {
         </div>
         <button
           onClick={() => setView("reviews")}
-          className="text-primary font-medium leading-5 text-xs"
+          className="text-primary font-medium leading-5 text-xs mb-[30px]"
         >
           {intl.formatMessage({
             id: "allReviews",
@@ -266,11 +266,6 @@ const MainView: React.FC<Props> = ({ setView, pwaContent }) => {
                 })}
               </div>
             </div>
-          </div>
-          <div className="text-[#1357CD] font-medium leading-4 text-xs cursor-pointer">
-            {intl.formatMessage({
-              id: "learnMore",
-            })}
           </div>
         </div>
       </div>

@@ -12,10 +12,10 @@ const ReviewsView: React.FC<Props> = ({ setView, pwaContent }) => {
   return (
     <div>
       <ViewHeader
-        id="ratingsAndReviews"
         setView={setView}
         appIcon={pwaContent.appIcon}
         developerName={pwaContent.developerName}
+        appName={pwaContent.appName}
       />
       <div className="pt-[3.5em] px-[24px]">
         <section className="mt-6 mb-4 flex flex-col gap-[1.5em]">

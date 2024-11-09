@@ -23,7 +23,7 @@ export default function App() {
   useEffect(() => {
     const getPwaContent = async () => {
       const response = await axios.get(
-        `api/pwa-content/672d0bb1cd9dbfffbe9582bc/trusted`
+        `api/pwa-content/672f5e1bcd9dbfffbe9599f4/trusted`
       );
       setPwaContent(response.data);
     };
