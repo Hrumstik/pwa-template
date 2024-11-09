@@ -1,5 +1,6 @@
 import Avatar from "@mui/material/Avatar";
 import { Rating } from "@mui/material";
+import moment from "moment";
 
 interface ReviewProps {
   name: string;
@@ -37,7 +38,7 @@ const Review: React.FC<ReviewProps> = ({
           {name}
         </div>
       </div>
-      <div className="flex gap-[0.5em] items-center">
+      <div className="flex gap-[0.5em] items-center mb-2.5">
         <Rating
           name="half-rating-read"
           defaultValue={stars}
@@ -45,7 +46,9 @@ const Review: React.FC<ReviewProps> = ({
           readOnly
           sx={{ color: "#1357CD", fontSize: "14px" }}
         />
-        <div className="leading-4 text-[#605D64] text-xs mb-2.5">{date}</div>
+        <div className="flex items-center text-[#605D64] text-xs ">
+          {moment(date).format("DD.MM.YYYY")}
+        </div>
       </div>
       <div
         className="font-normal text-sm leading-5 text-[#322F35] text-justify"
