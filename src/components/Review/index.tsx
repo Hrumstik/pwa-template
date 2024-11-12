@@ -9,6 +9,8 @@ interface ReviewProps {
   date: string;
   src?: string;
   reviewIconColor: string;
+  devResponse?: string;
+  developerName?: string;
 }
 
 const Review: React.FC<ReviewProps> = ({
@@ -18,6 +20,8 @@ const Review: React.FC<ReviewProps> = ({
   text,
   date,
   src,
+  devResponse,
+  developerName,
 }) => {
   const avatarName = name
     .split(" ")
@@ -25,7 +29,7 @@ const Review: React.FC<ReviewProps> = ({
     .join("")
     .toUpperCase();
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full gap-4">
       <div className="flex gap-[14px] items-center mb-[10px]">
         <Avatar
           src={src}
@@ -60,6 +64,15 @@ const Review: React.FC<ReviewProps> = ({
       >
         {text}
       </div>
+      {devResponse && developerName && (
+        <div className="rounded bg-[#EBEBEB] px-3 py-3 flex flex-col gap-4 text-sm leading-4">
+          <div className="flex justify-between">
+            <div>{developerName}</div>
+            <div> {moment(date).format("DD.MM.YYYY")}</div>
+          </div>
+          <div>{devResponse}</div>
+        </div>
+      )}
     </div>
   );
 };

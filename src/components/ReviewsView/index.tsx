@@ -41,6 +41,8 @@ const ReviewsView: React.FC<Props> = ({ setView, pwaContent }) => {
                 stars={review.reviewAuthorRating}
                 text={review.reviewText}
                 date={review.reviewDate}
+                devResponse={review.devResponse}
+                developerName={pwaContent.developerName}
               />
             );
           })}

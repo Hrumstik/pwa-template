@@ -33,6 +33,7 @@ const InstallButton: React.FC<Props> = ({ appLink }) => {
     window.addEventListener(
       "beforeinstallprompt",
       (e: BeforeInstallPromptEvent) => {
+        e.preventDefault();
         console.log("beforeinstallprompt fired");
         setInstallPrompt(e);
       }

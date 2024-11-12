@@ -18,7 +18,8 @@ export interface PwaContent {
   lastUpdate: string;
   pwaLink: string;
   rating: string;
-  description: string;
+  shortDescription: string;
+  fullDescription: string;
   countOfReviewsFull: number;
   countOfStars: number;
   appIcon: string;
@@ -35,6 +36,7 @@ export interface PwaContent {
     reviewIconColor: string;
     reviewText: string;
     reviewDate: string;
+    devResponse?: string;
   }[];
   version: string;
   sliders: number[];

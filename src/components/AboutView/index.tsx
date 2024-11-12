@@ -38,7 +38,7 @@ const AboutView: React.FC<Props> = ({ setView, pwaContent }) => {
           {intl.formatMessage({ id: "about" })}
         </div>
         <div className="text-sm whitespace-pre-wrap relative text-justify text-[#605D64]">
-          {pwaContent.description}
+          {pwaContent.fullDescription}
         </div>
       </section>
       <div className="bg-[#C6C6C6] h-[1px] w-full" />

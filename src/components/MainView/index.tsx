@@ -61,7 +61,7 @@ const MainView: React.FC<Props> = ({ setView, pwaContent }) => {
         <div className="flex items-center mb-5">
           <div className="flex-1 flex flex-col justify-center items-center h-10">
             <div className="font-medium text-sm text-[#020202] flex gap-0.5 items-center justify-center">
-              {pwaContent.rating}
+              {pwaContent.countOfStars}
               <StarIcon />
             </div>
             <div className="text-xs text-[#605D64] font-medium">
@@ -107,7 +107,7 @@ const MainView: React.FC<Props> = ({ setView, pwaContent }) => {
           />
         </div>
         <div className="text-left leading-5 text-[#605D64] font-normal text-sm mb-4">
-          {pwaContent.description}
+          {pwaContent.shortDescription}
         </div>
         <TagsSlider tags={pwaContent.tags} />
         <div className="flex justify-between items-center mb-5">
@@ -142,7 +142,7 @@ const MainView: React.FC<Props> = ({ setView, pwaContent }) => {
             className="text-[45px] leading-[52px]"
             style={{ gridArea: "rating-big" }}
           >
-            {pwaContent.rating}
+            {pwaContent.countOfStars}
           </div>
           <div className="flex" style={{ gridArea: "rating-stars" }}>
             <Rating
@@ -190,6 +190,8 @@ const MainView: React.FC<Props> = ({ setView, pwaContent }) => {
                 stars={review.reviewAuthorRating}
                 text={review.reviewText}
                 date={review.reviewDate}
+                devResponse={review.devResponse}
+                developerName={pwaContent.developerName}
               />
             );
           })}
