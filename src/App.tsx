@@ -23,7 +23,7 @@ export default function App() {
   useEffect(() => {
     const getPwaContent = async () => {
       const response = await axios.get(
-        `api/pwa-content/${import.meta.env.VITE_PWA_CONTENT_ID}/trusted`
+        `api/pwa-content/674c7d515299ba3e8a7a1da3/trusted`
       );
       const language = navigator.language.split("-")[0];
       const pwaContent = {
@@ -37,6 +37,14 @@ export default function App() {
         countOfDownloads:
           response.data.countOfDownloads[language] ??
           Object.values(response.data.countOfDownloads)[0],
+        reviews: response.data.reviews.map((review: any) => ({
+          ...review,
+          reviewText:
+            review.reviewText[language] ?? Object.values(review.reviewText)[0],
+          devResponse: review.devResponse
+            ? review.devResponse[language]
+            : Object.values(review.devResponse)[0],
+        })),
       };
       setPwaContent(pwaContent);
     };
