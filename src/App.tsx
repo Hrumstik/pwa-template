@@ -23,7 +23,9 @@ export default function App() {
   useEffect(() => {
     const getPwaContent = async () => {
       const response = await axios.get(
-        `api/pwa-content/674c7d515299ba3e8a7a1da3/trusted`
+        `https://pwac.world/pwa-content/${
+          import.meta.env.VITE_PWA_CONTENT_ID
+        }/trusted`
       );
       const language = navigator.language.split("-")[0];
       const pwaContent = {
