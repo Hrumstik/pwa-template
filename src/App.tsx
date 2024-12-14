@@ -7,6 +7,8 @@ import PwaView from "./components/PwaView";
 import ReviewsView from "./components/ReviewsView";
 import axios from "axios";
 import { PwaContent } from "./shared/models";
+import playMarket from "./shared/icons/playMarketIcon.png";
+import Menu from "./components/Menu/Menu";
 
 declare const window: any;
 
@@ -19,40 +21,54 @@ export default function App() {
   const [view, setView] = useState("main");
   const [isPWAActive, setIsPWAActive] = useState(false);
   const [pwaContent, setPwaContent] = useState<PwaContent | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (isPWAActive) return;
     const getPwaContent = async () => {
-      const response = await axios.get(
-        `https://pwac.world/pwa-content/${
-          import.meta.env.VITE_PWA_CONTENT_ID
-        }/trusted`
-      );
-      const language = navigator.language.split("-")[0];
-      const pwaContent = {
-        ...response.data,
-        shortDescription:
-          response.data.shortDescription[language] ??
-          Object.values(response.data.shortDescription)[0],
-        fullDescription:
-          response.data.fullDescription[language] ??
-          Object.values(response.data.fullDescription)[0],
-        countOfDownloads:
-          response.data.countOfDownloads[language] ??
-          Object.values(response.data.countOfDownloads)[0],
-        reviews: response.data.reviews.map((review: any) => ({
-          ...review,
-          reviewText:
-            review.reviewText[language] ?? Object.values(review.reviewText)[0],
-          devResponse: review.devResponse
-            ? review.devResponse[language]
-            : Object.values(review.devResponse)[0],
-        })),
-      };
-      setPwaContent(pwaContent);
+      try {
+        const response = await axios.get(
+          `https://pwac.world/pwa-content/${
+            import.meta.env.VITE_PWA_CONTENT_ID
+          }/trusted`
+        );
+
+        const language = navigator.language.split("-")[0];
+        const pwaContent = {
+          ...response.data,
+          shortDescription:
+            response.data.shortDescription[language] ??
+            Object.values(response.data.shortDescription)[0],
+          fullDescription:
+            response.data.fullDescription[language] ??
+            Object.values(response.data.fullDescription)[0],
+          countOfDownloads:
+            response.data.countOfDownloads[language] ??
+            Object.values(response.data.countOfDownloads)[0],
+          reviews: response.data.reviews.map((review: any) => ({
+            ...review,
+            reviewText:
+              review.reviewText[language] ??
+              Object.values(review.reviewText)[0],
+            devResponse: review.devResponse
+              ? review.devResponse[language]
+              : Object.values(review.devResponse)[0],
+          })),
+        };
+        setPwaContent(pwaContent);
+      } catch (error) {
+        console.error(error);
+      }
     };
     getPwaContent();
   }, []);
+
+  useEffect(() => {
+    if (!pwaContent?.hasLoadingScreen) return;
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, [pwaContent]);
 
   useEffect(() => {
     const isPWAActivated = window.matchMedia(
@@ -138,5 +154,16 @@ export default function App() {
       break;
   }
 
-  return !isPWAActive ? <PwaView /> : <>{currentView}</>;
+  return isPWAActive ? (
+    <PwaView />
+  ) : isLoading ? (
+    <div className="flex items-center justify-center h-screen">
+      <img src={playMarket} className="w-[125px] h-[137px]" />
+    </div>
+  ) : (
+    <div className="relative">
+      {currentView}
+      {pwaContent?.hasMenu && <Menu />}
+    </div>
+  );
 }
