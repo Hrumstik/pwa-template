@@ -7,7 +7,7 @@ import PwaView from "./components/PwaView";
 import ReviewsView from "./components/ReviewsView";
 import axios from "axios";
 import { PwaContent } from "./shared/models";
-import playMarket from "./shared/icons/playMarketIcon.png";
+import playMarket from "./shared/icons/playMarketIcon.svg";
 import Menu from "./components/Menu/Menu";
 
 declare const window: any;
@@ -28,9 +28,7 @@ export default function App() {
     const getPwaContent = async () => {
       try {
         const response = await axios.get(
-          `https://pwac.world/pwa-content/${
-            import.meta.env.VITE_PWA_CONTENT_ID
-          }/trusted`
+          `https://pwac.world/pwa-content/676296d4a74180a67759f1ad/trusted`
         );
 
         const language = navigator.language.split("-")[0];
@@ -67,7 +65,7 @@ export default function App() {
     if (!pwaContent?.hasLoadingScreen) return;
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 1000);
   }, [pwaContent]);
 
   useEffect(() => {
@@ -156,14 +154,17 @@ export default function App() {
 
   return isPWAActive ? (
     <PwaView />
-  ) : isLoading ? (
-    <div className="flex items-center justify-center h-screen">
-      <img src={playMarket} className="w-[125px] h-[137px]" />
-    </div>
   ) : (
-    <div className="relative">
-      {currentView}
-      {pwaContent?.hasMenu && <Menu />}
-    </div>
+      <div>
+        <div
+            className={`fixed z-[10000000] bg-white w-full h-full justify-center items-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${
+                isLoading && pwaContent?.hasLoadingScreen ? 'flex' : 'hidden'
+            }`}
+        >
+          <img src={playMarket} className="w-[125px] h-[137px]"/>
+        </div>
+        {currentView}
+        {pwaContent?.hasMenu && <Menu/>}
+      </div>
   );
 }
