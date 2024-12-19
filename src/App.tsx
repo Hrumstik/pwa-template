@@ -182,15 +182,12 @@ export default function App() {
 
   return isPWAActive ? (
     <PwaView />
+  ) : isLoading ? (
+    <div className="flex items-center justify-center h-screen">
+      <img src={playMarket} className="w-[125px] h-[137px]" />
+    </div>
   ) : (
-    <div>
-      <div
-        className={`fixed z-[10000000] bg-white w-full h-full justify-center items-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${
-          isLoading && pwaContent?.hasLoadingScreen ? "flex" : "hidden"
-        }`}
-      >
-        <img src={playMarket} className="w-[125px] h-[137px]" />
-      </div>
+    <div className="relative">
       {currentView}
       {pwaContent?.hasMenu && <Menu />}
     </div>
