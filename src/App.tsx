@@ -28,7 +28,9 @@ export default function App() {
     const getPwaContent = async () => {
       try {
         const response = await axios.get(
-          `https://pwac.world/pwa-content/676296d4a74180a67759f1ad/trusted`
+            `https://pwac.world/pwa-content/${
+                import.meta.env.VITE_PWA_CONTENT_ID
+            }/trusted`
         );
 
         const language = navigator.language.split("-")[0];
