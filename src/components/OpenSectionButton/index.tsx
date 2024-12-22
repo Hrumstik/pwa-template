@@ -26,7 +26,7 @@ const OpenSectionButton: React.FC<Props> = ({
       className="flex items-center w-full justify-between"
       onClick={handleSetView}
     >
-      <div className="text-base font-medium leading-5 text-[#605D64]">
+      <div className="text-base font-medium leading-5 text-[#1D1D1D]">
         {intl.formatMessage({ id, defaultMessage })}
       </div>
       <ArrowRight />
