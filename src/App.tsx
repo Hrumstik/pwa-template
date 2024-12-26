@@ -49,7 +49,6 @@ export default function App() {
             response.data.countOfDownloads[language] ??
             Object.values(response.data.countOfDownloads)[0],
           reviews: response.data.reviews.map((review: any) => {
-            console.log(review);
             return {
               ...review,
               reviewText:
