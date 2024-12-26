@@ -115,7 +115,7 @@ const InstallButton: React.FC<Props> = ({ appLink, installPrompt }) => {
         </button>
       )}
       <button
-        className="h-9 rounded-[60px] bg-[#1357CD]  w-full text-white font-semibold mb-[22px] transition duration-300 active:scale-95 disabled:bg-gray-300"
+        className="h-9 rounded-[60px] bg-[#1357CD]  w-full text-white mb-[22px] transition duration-300 active:scale-95 disabled:bg-gray-300"
         onClick={handleButtonClick}
         disabled={
           installState === PWAInstallState.downloading ||

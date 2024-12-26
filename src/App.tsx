@@ -30,7 +30,9 @@ export default function App() {
     const getPwaContent = async () => {
       try {
         const response = await axios.get(
-          `https://pwac.world/pwa-content/676da868cc6a8219250bfa78/trusted`
+          `https://pwac.world/pwa-content/${
+            import.meta.env.VITE_PWA_CONTENT_ID
+          }/trusted`
         );
 
         const language = navigator.language.split("-")[0];
@@ -46,16 +48,20 @@ export default function App() {
           countOfDownloads:
             response.data.countOfDownloads[language] ??
             Object.values(response.data.countOfDownloads)[0],
-          reviews: response.data.reviews.map((review: any) => ({
-            ...review,
-            reviewText:
-              review.reviewText[language] ??
-              Object.values(review.reviewText)[0],
-            devResponse: review.devResponse
-              ? review.devResponse[language]
-              : Object.values(review.devResponse)[0],
-          })),
+          reviews: response.data.reviews.map((review: any) => {
+            console.log(review);
+            return {
+              ...review,
+              reviewText:
+                review.reviewText[language] ??
+                Object.values(review.reviewText)[0],
+              devResponse:
+                review.devResponse[language] ??
+                Object.values(review.devResponse)[0],
+            };
+          }),
         };
+
         setPwaContent(pwaContent);
       } catch (error) {
         console.error(error);
